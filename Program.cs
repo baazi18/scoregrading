@@ -57,7 +57,7 @@ namespace filestreamer
 				dt.Rows.Add(row);
 			}
 
-			// Createe a data view of a data table to perform sort operations.
+			// Create a data view of a data table to perform sort operations.
 			DataView dv = dt.DefaultView;
 			dv.Sort = "Lastname ASC, Marks DESC";
 			DataTable sortedDT = dv.ToTable();
