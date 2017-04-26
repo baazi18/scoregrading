@@ -22,6 +22,7 @@ namespace filestreamer
 
 	public class filestreamerxc
 	{
+		// Method to read data from a text file and stored in a string array.
 		public void getdatafromfile()
 		{
 			string[] lines = System.IO.File.ReadAllLines(@"/Users/pratikbhajekar/Desktop/scores.txt");
@@ -34,9 +35,7 @@ namespace filestreamer
 				Console.WriteLine("\t" + line);
 			}
 
-			// Keep the console window open in debug mode.
-
-
+			// Create a data table of 3 columns to store data.
 			DataTable dt = new DataTable();
 
 			dt.Columns.Add("Lastname");
@@ -44,7 +43,7 @@ namespace filestreamer
 			dt.Columns.Add("Marks");
 			DataRow row;
 
-
+                       // Populate the data table.
 			foreach (string item in lines)
 			{
 				string[] cons = item.Split(',');
@@ -58,29 +57,32 @@ namespace filestreamer
 				dt.Rows.Add(row);
 			}
 
-
+			// Createe a data view of a data table to perform sort operations.
 			DataView dv = dt.DefaultView;
 			dv.Sort = "Lastname ASC, Marks DESC";
 			DataTable sortedDT = dv.ToTable();
 			dt = sortedDT;
-
+			
+			// Create a new tet file.
 			System.IO.StreamWriter file = new System.IO.StreamWriter(@"/Users/pratikbhajekar/Desktop/graded-scores.txt");
 			
 			int i;
-            file.Write(Environment.NewLine);
+			
+			//Write the data table content to new text file.
+           		file.Write(Environment.NewLine);
 			foreach (DataRow rows in dt.Rows)
 			{
 				object[] array = rows.ItemArray;
 				for (i = 0; i < array.Length - 1; i++)
 				{
-                    file.Write(array[i].ToString() + " | ");
+                    	file.Write(array[i].ToString() + " | ");
 				}
-                file.WriteLine(array[i].ToString());
+                	file.WriteLine(array[i].ToString());
 			}
 
-            file.Write("*****END OF DATA****" + DateTime.Now.ToString());
-            file.Flush();
-            file.Close();
+			 file.Write("*****END OF DATA****" + DateTime.Now.ToString());
+			 file.Flush();
+			 file.Close();
 
 			Console.WriteLine("File is created on the given path. Now press any key to exit.");
 			System.Console.ReadKey();
